@@ -7,11 +7,13 @@ const validator = require("validator")
 authRouter.post("/signup",async (req,res)=>{
     try{
         validateSignupData(req.body)
-        const {firstName,lastName,password,emailId,age} = req.body
+        const {firstName,lastName,password,emailId,age,photoUrl} = req.body
         const passwordHash = await bcrypt.hash(password,10);
-        const user = new User({firstName,lastName,emailId,password:passwordHash,age})
-        await user.save();
-        res.send("User added Successfully!")
+        const user = new User({firstName,lastName,emailId,password:passwordHash,age,photoUrl})
+       const savedUser =  await user.save();
+       const  token = await savedUser.getJWT();
+       res.cookie("token",token)
+        res.json({message:"User added Successfully!",data:savedUser})
     }
     catch(err)
     {
@@ -34,7 +36,7 @@ authRouter.post("/login",async (req,res)=>{
                 const token = await userDetails.getJWT();
             //add token to cookie and send response to user
             res.cookie("token",token)
-                res.send("Logged in succesfully")
+                res.send(userDetails)
             }
             else{
                 throw new Error("Email or password is incorrect")
@@ -48,7 +50,9 @@ authRouter.post("/login",async (req,res)=>{
     }
     catch(err)
     {
-        res.status(404).send("Unable to login: " +err.message)
+        res.status(404).json({
+            message:"Invalid Credentials"
+        })
     }
 })
 authRouter.post("/logout",(req,res)=>{

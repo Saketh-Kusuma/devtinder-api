@@ -29,11 +29,11 @@ const userSchema = new Schema({
             {
                 throw new Error("Invalid URL")
             }
-        }
+        },required:true
     },
     about:{
         type:String,
-        default:"This is"
+        default:`This is a default about of the user `
     },
     skills:{
         type:[String],

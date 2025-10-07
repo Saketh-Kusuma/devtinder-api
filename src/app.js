@@ -5,7 +5,13 @@ const profile = require("./routes/profile")
 const user = require("./routes/user")
 const auth = require("./routes/auth")
 const request = require("./routes/request")
+const cors = require("cors");
 const app = express();
+var whitelist = ['http://localhost:5173', 'https://85c63vxc-5173.inc1.devtunnels.ms/']
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 app.use(express.json())
 app.use(cookieParser())
 app.get("/",(req,res)=>{

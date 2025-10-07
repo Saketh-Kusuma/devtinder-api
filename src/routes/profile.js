@@ -7,7 +7,7 @@ const profileRouter = express.Router();
 profileRouter.get("/view",userAuth,async (req,res)=>{
     try{
            const user = req.user
-            res.send(user.firstName + " " + user.lastName + " Logged in")
+            res.send(user)
     }
     catch(err){
         res.status(404).send("Login or Signup required")
