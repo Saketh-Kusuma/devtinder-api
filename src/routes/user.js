@@ -25,16 +25,17 @@ userRouter.get("/connections",userAuth,async (req,res)=>{
         $or:[{fromUserId:user._id,status:"accepted"},{toUserId:user._id,status:"accepted"}],
        }).populate("fromUserId",USER_SAFE_DATA).populate("toUserId",USER_SAFE_DATA)
          const data = connections.map((field)=>{
-            if(field.fromUserId.toString()===user._id)
+            if(field.fromUserId==user._id)
             {
                 return field.toUserId
             }
             return field.fromUserId
          })
-       res.json({data:data})
+         console.log(data)
+       res.json({data})
     }
     catch(err){
-        res.status(400).send("Something Went Wrong")
+        res.status(400).send(err.message)
     }
 })
 userRouter.get("/feed",userAuth,async (req,res)=>{
