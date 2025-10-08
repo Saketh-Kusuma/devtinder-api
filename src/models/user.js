@@ -45,7 +45,7 @@ const userSchema = new Schema({
 })
 userSchema.methods.getJWT = async function () {
     const user = this;
-    const token = await jwt.sign({id:user._id},"DEV@TINDER$790",{expiresIn:"7d"})
+    const token = await jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"7d"})
     return token;
 } 
 userSchema.methods.getPasswordStatus = async function (password)

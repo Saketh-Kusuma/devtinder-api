@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const connectToDb = async () =>{
    try{
-     await mongoose.connect("mongodb+srv://sakethsunny65:V7kH11oeh0pJkCiI@cluster0.przwd00.mongodb.net/Devtinder");
+     await mongoose.connect(process.env.DB_CONNECTION_REQUEST);
      console.log("Connected to cluster");
    }
    catch(err){
