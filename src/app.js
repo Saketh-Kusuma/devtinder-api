@@ -9,6 +9,7 @@ const request = require("./routes/request")
 const cors = require("cors");
 const app = express();
 var whitelist = ['http://localhost:5173', 'https://85c63vxc-5173.inc1.devtunnels.ms/']
+require("./utils/nodeCron")
 app.use(cors({
   origin: true,
   credentials: true
